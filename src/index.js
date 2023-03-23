@@ -1,11 +1,9 @@
 import './css/styles.css';
-
-const DEBOUNCE_DELAY = 300;
-
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 import { fetchCountries } from './fetchCountries';
+
+const DEBOUNCE_DELAY = 300;
 
 const searchInput = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
@@ -16,18 +14,19 @@ searchInput.addEventListener('input', debounce(onSearchCountry, DEBOUNCE_DELAY))
 
 function onSearchCountry() {
   const name = searchInput.value.trim();
-  if(!name.trim()){
+  if (!name.trim()) {
+    clearInput();
     return}
   fetchCountries(name).then(countries => {
     clearInput();
-    inputCheck(countries)
+    inputCheck(countries);
   }).catch(() => {
       Notify.failure("Oops, there is no country with that name");
   clearInput(); })
   
 };
 
- function renderCountriesList(countries){
+function renderCountriesList(countries) {
   return countries.map(({name, flags}) => {
     return `<li class='country-list__item'>
     <img class="country-list__flag" src="${flags.svg}" alt="${name.official}" width = 30px height = 30px>
@@ -35,7 +34,7 @@ function onSearchCountry() {
   }).join('')
 };
   
-function renderCountriesInfo(countries){
+function renderCountriesInfo(countries) {
   return countries.map(({capital, population, languages})=>{
 return `<ul class='country-list-info'>
 <li class='country-list-info__item'>Capital: ${capital}</li>
@@ -59,3 +58,6 @@ function clearInput() {
   countryInfo.innerHTML = '';
   countryList.innerHTML = '';
 };
+
+
+
