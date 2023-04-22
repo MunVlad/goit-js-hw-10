@@ -3,7 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import debounce from 'lodash.debounce';
 import { fetchCountries } from './fetchCountries';
 
-const DEBOUNCE_DELAY = 300;
+const DEBOUNCE_DELAY = 3000;
 
 const searchInput = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
@@ -23,7 +23,7 @@ function onSearchCountry() {
   }).catch(() => {
       Notify.failure("Oops, there is no country with that name");
   clearInput(); })
-  
+  console.log(fetchCountries(name));
 };
 
 function renderCountriesList(countries) {
